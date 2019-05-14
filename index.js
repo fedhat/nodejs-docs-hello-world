@@ -25,9 +25,12 @@ const init = async () => {
 
     server.route({
         method: 'GET',
-        path: '/hello/{name}',
+        path: '/hello/{name?}',
         handler: (request, h) => {
-            return `Hello ${encodeURIComponent(request.params.name)}!`;
+
+            const name = request.params.name ? encodeURIComponent(request.params.name) : 'stranger';
+            const location = request.query.location ? request.query.location : 'unspecified location';
+            return `Hello ${name}, from ${location}`;
         }
     });
 
