@@ -10,6 +10,7 @@ const init = async () => {
     //     host: host
     // });
 
+    // ON AZURE don't pass in the host b/c it won't work, but you won't know why. YAY!
     const server = Hapi.server({
         port: port
     });
@@ -19,6 +20,14 @@ const init = async () => {
         path:'/',
         handler: (request, h) => {
             return 'HAPI: AZURE: Hello World!';
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/hello/{name}',
+        handler: (request, h) => {
+            return `Hello ${encodeURIComponent(request.params.name)}!`;
         }
     });
 
